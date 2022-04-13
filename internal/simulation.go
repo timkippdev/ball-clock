@@ -27,22 +27,20 @@ type simulation struct {
 func NewSimulation(params SimulationParams) *simulation {
 	// setup tracks (defined in reverse order for linking)
 	// hour - holds balls indicating how many hours have passed (max 12)
-	hourTrack := &track{balls: &ballQueue{max: 12}, name: "Hour", flushDayRatio: 0.5} // flushDayRatio 0.5 because each flush is 1/2 day (12 hours)
+	hourTrack := &track{maxBalls: 12, name: "Hour", flushToDayRatio: 0.5} // flushToDayRatio 0.5 because each flush is 1/2 day (12 hours)
 
 	// five minute - holds balls indicating how many minutes have passed in increments of five (max 12)
-	minFiveTrack := &track{balls: &ballQueue{max: 12}, name: "FiveMin", nextTrack: hourTrack}
+	minFiveTrack := &track{maxBalls: 12, name: "FiveMin", nextTrack: hourTrack}
 
 	// minute - holds balls indicating how many minutes have passed (max 5)
-	minTrack := &track{balls: &ballQueue{max: 5}, name: "Min", nextTrack: minFiveTrack}
+	minTrack := &track{maxBalls: 5, name: "Min", nextTrack: minFiveTrack}
 
 	// reservoir - holds the unused balls not currently in any other track
-	reservoir := &track{balls: &ballQueue{}, name: "Main", nextTrack: minTrack}
+	reservoir := &track{name: "Main", nextTrack: minTrack}
 
 	// load balls into reservoir
 	for i := uint(1); i <= params.NumberOfBalls; i++ {
-		reservoir.balls.add(&ball{
-			id: i,
-		})
+		reservoir.add(i)
 	}
 
 	// setup simulation
@@ -68,12 +66,12 @@ func (s *simulation) Run() {
 			s.clock.tick()
 
 			// check if reservoir is full
-			elements := s.clock.reservoir.balls.elements
+			elements := s.clock.reservoir.balls
 			if len(elements) == int(s.params.NumberOfBalls) {
 				// check if reservoir is in initial order
 				isInOrder := true
 				for i, v := range elements {
-					if v.id != uint(i+1) {
+					if v != uint(i+1) {
 						isInOrder = false
 						break
 					}

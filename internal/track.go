@@ -1,44 +1,36 @@
 package internal
 
 type track struct {
-	balls         *ballQueue
-	flushDayRatio float64
-	name          string
-	nextTrack     *track
+	balls           []uint
+	flushCount      uint
+	flushToDayRatio float64
+	maxBalls        uint8
+	name            string
+	nextTrack       *track
 }
 
-type ball struct {
-	id uint
+func (t *track) add(id uint) {
+	t.balls = append(t.balls, id)
 }
 
-type ballQueue struct {
-	elements   []*ball
-	flushCount uint
-	max        uint8
-}
-
-func (bq *ballQueue) add(b *ball) {
-	bq.elements = append(bq.elements, b)
-}
-
-func (bq *ballQueue) canAdd() bool {
+func (t *track) canAdd() bool {
 	// if no max is set, treat as unlimited storage
-	if bq.max == 0 {
+	if t.maxBalls == 0 {
 		return true
 	}
-	return uint8(len(bq.elements)) < bq.max-1
+	return uint8(len(t.balls)) < t.maxBalls-1
 }
 
-func (bq *ballQueue) flush() {
-	bq.flushCount++
-	bq.elements = make([]*ball, 0)
+func (t *track) flush() {
+	t.flushCount++
+	t.balls = make([]uint, 0)
 }
 
-func (bq *ballQueue) getNext() *ball {
-	if len(bq.elements) == 0 {
-		return nil
+func (t *track) getNext() uint {
+	if len(t.balls) == 0 {
+		return 0
 	}
-	next := bq.elements[0]
-	bq.elements = bq.elements[1:]
+	next := t.balls[0]
+	t.balls = t.balls[1:]
 	return next
 }
