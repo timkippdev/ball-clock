@@ -7,10 +7,14 @@ func BenchmarkSimulationModeOne30Balls(b *testing.B) {
 }
 
 func BenchmarkSimulationModeOne45Balls(b *testing.B) {
-	fireSimulation(b, ModeOne, 30, 0)
+	fireSimulation(b, ModeOne, 45, 0)
 }
 
-func BenchmarkSimulationModeTwo30Balls(b *testing.B) {
+func BenchmarkSimulationModeOne123Balls(b *testing.B) {
+	fireSimulation(b, ModeOne, 123, 0)
+}
+
+func BenchmarkSimulationModeTwo30Balls325Minutes(b *testing.B) {
 	fireSimulation(b, ModeTwo, 30, 325)
 }
 
