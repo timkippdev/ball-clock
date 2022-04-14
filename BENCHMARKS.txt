@@ -19,49 +19,49 @@ BenchmarkSimulationModeTwo30Balls325Minutes-12    	   74245	     16051 ns/op	   
 
 -- clock_test.go --
 BenchmarkFlushTrack100
-BenchmarkFlushTrack100-12                    	224570907	         5.266 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFlushTrack100-12                    	231567129	         5.226 ns/op	       0 B/op	       0 allocs/op
 BenchmarkFlushTrack1000
-BenchmarkFlushTrack1000-12                   	225697142	         5.325 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFlushTrack1000-12                   	231929064	         5.103 ns/op	       0 B/op	       0 allocs/op
 BenchmarkFlushTrack10000
-BenchmarkFlushTrack10000-12                  	225429247	         5.218 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFlushTrack10000-12                  	231692664	         5.319 ns/op	       0 B/op	       0 allocs/op
 BenchmarkFlushTrack100000
-BenchmarkFlushTrack100000-12                 	229629566	         5.175 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFlushTrack100000-12                 	226868365	         5.304 ns/op	       0 B/op	       0 allocs/op
 BenchmarkFlushTrack1000000
-BenchmarkFlushTrack1000000-12                	198037728	         5.572 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFlushTrack1000000-12                	209706518	         5.340 ns/op	       0 B/op	       0 allocs/op
 BenchmarkTick100
-BenchmarkTick100-12                          	698473171	         1.746 ns/op	       0 B/op	       0 allocs/op
+BenchmarkTick100-12                          	689341680	         1.737 ns/op	       0 B/op	       0 allocs/op
 BenchmarkTick1000
-BenchmarkTick1000-12                         	692770808	         1.738 ns/op	       0 B/op	       0 allocs/op
+BenchmarkTick1000-12                         	706725738	         1.713 ns/op	       0 B/op	       0 allocs/op
 BenchmarkTick10000
-BenchmarkTick10000-12                        	688601449	         1.748 ns/op	       0 B/op	       0 allocs/op
+BenchmarkTick10000-12                        	703604907	         1.704 ns/op	       0 B/op	       0 allocs/op
 BenchmarkTick100000
-BenchmarkTick100000-12                       	665419676	         1.769 ns/op	       0 B/op	       0 allocs/op
+BenchmarkTick100000-12                       	698540896	         1.713 ns/op	       0 B/op	       0 allocs/op
 BenchmarkTick1000000
-BenchmarkTick1000000-12                      	600389376	         1.889 ns/op	       0 B/op	       0 allocs/op
+BenchmarkTick1000000-12                      	676005681	         1.753 ns/op	       0 B/op	       0 allocs/op
 BenchmarkMoveBallToTrack1TrackMax1
-BenchmarkMoveBallToTrack1TrackMax1-12        	20327121	        68.07 ns/op	      48 B/op	       1 allocs/op
+BenchmarkMoveBallToTrack1TrackMax1-12        	16807910	        75.21 ns/op	      53 B/op	       1 allocs/op
 BenchmarkMoveBallToTrack2TracksMax1
-BenchmarkMoveBallToTrack2TracksMax1-12       	19015122	        66.42 ns/op	      51 B/op	       1 allocs/op
+BenchmarkMoveBallToTrack2TracksMax1-12       	17439672	        74.94 ns/op	      52 B/op	       1 allocs/op
 BenchmarkMoveBallToTrack3TracksMax1
-BenchmarkMoveBallToTrack3TracksMax1-12       	16199514	        65.02 ns/op	      48 B/op	       1 allocs/op
+BenchmarkMoveBallToTrack3TracksMax1-12       	16028463	        82.57 ns/op	      55 B/op	       1 allocs/op
 BenchmarkMoveBallToTrack100TracksMax1
-BenchmarkMoveBallToTrack100TracksMax1-12     	 1570644	       775.2 ns/op	      53 B/op	       1 allocs/op
+BenchmarkMoveBallToTrack100TracksMax1-12     	 1536062	       762.5 ns/op	      50 B/op	       1 allocs/op
 BenchmarkMoveBallToTrack1TrackMax5
-BenchmarkMoveBallToTrack1TrackMax5-12        	13987915	        85.02 ns/op	      66 B/op	       1 allocs/op
+BenchmarkMoveBallToTrack1TrackMax5-12        	13683046	        86.61 ns/op	      64 B/op	       1 allocs/op
 BenchmarkMoveBallToTrack2TracksMax5
-BenchmarkMoveBallToTrack2TracksMax5-12       	12835454	        81.43 ns/op	      62 B/op	       1 allocs/op
+BenchmarkMoveBallToTrack2TracksMax5-12       	14218279	        82.43 ns/op	      64 B/op	       1 allocs/op
 BenchmarkMoveBallToTrack3TracksMax5
-BenchmarkMoveBallToTrack3TracksMax5-12       	12574048	        83.62 ns/op	      63 B/op	       1 allocs/op
+BenchmarkMoveBallToTrack3TracksMax5-12       	13283222	        75.65 ns/op	      68 B/op	       1 allocs/op
 BenchmarkMoveBallToTrack100TracksMax5
-BenchmarkMoveBallToTrack100TracksMax5-12     	12479086	        84.16 ns/op	      64 B/op	       1 allocs/op
+BenchmarkMoveBallToTrack100TracksMax5-12     	13979224	        97.93 ns/op	      66 B/op	       1 allocs/op
 BenchmarkMoveBallToTrack1TrackMax10
-BenchmarkMoveBallToTrack1TrackMax10-12       	16879920	        71.21 ns/op	      81 B/op	       1 allocs/op
+BenchmarkMoveBallToTrack1TrackMax10-12       	15342536	        68.26 ns/op	      72 B/op	       1 allocs/op
 BenchmarkMoveBallToTrack2TracksMax10
-BenchmarkMoveBallToTrack2TracksMax10-12      	14885886	        80.36 ns/op	      79 B/op	       1 allocs/op
+BenchmarkMoveBallToTrack2TracksMax10-12      	15776778	        89.27 ns/op	      84 B/op	       1 allocs/op
 BenchmarkMoveBallToTrack3TracksMax10
-BenchmarkMoveBallToTrack3TracksMax10-12      	14874265	        79.81 ns/op	      80 B/op	       1 allocs/op
+BenchmarkMoveBallToTrack3TracksMax10-12      	14226524	        84.12 ns/op	      78 B/op	       1 allocs/op
 BenchmarkMoveBallToTrack100TracksMax10
-BenchmarkMoveBallToTrack100TracksMax10-12    	15387027	        79.27 ns/op	      78 B/op	       1 allocs/op
+BenchmarkMoveBallToTrack100TracksMax10-12    	14112278	        83.52 ns/op	      79 B/op	       1 allocs/op
 
 -- track_test.go --
 BenchmarkBallQueueAdd0ExistingElements

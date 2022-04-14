@@ -25,12 +25,12 @@ func BenchmarkFlushTrack1000000(b *testing.B) {
 }
 
 func benchmarkFlushTrack(b *testing.B, ballCount uint) {
-	t := &track{balls: &ballQueue{}}
+	t := &track{balls: &ballQueue{elements: make([]*ball, ballCount)}}
 	c := &clock{
 		reservoir: &track{balls: &ballQueue{}, nextTrack: t},
 	}
-	for i := uint(1); i <= ballCount; i++ {
-		t.balls.add(&ball{id: i})
+	for i := uint(0); i < ballCount; i++ {
+		t.balls.elements[i] = &ball{id: i}
 	}
 
 	for n := 0; n < b.N; n++ {
@@ -59,12 +59,12 @@ func BenchmarkTick1000000(b *testing.B) {
 }
 
 func benchmarkTick(b *testing.B, ballCount uint) {
-	t := &track{balls: &ballQueue{}}
+	t := &track{balls: &ballQueue{elements: make([]*ball, ballCount)}}
 	c := &clock{
 		reservoir: &track{balls: &ballQueue{}, nextTrack: t},
 	}
-	for i := uint(1); i <= ballCount; i++ {
-		c.reservoir.balls.add(&ball{id: i})
+	for i := uint(0); i < ballCount; i++ {
+		t.balls.elements[i] = &ball{id: i}
 	}
 
 	for n := 0; n < b.N; n++ {
