@@ -1,0 +1,88 @@
+ns/op - average time each function call takes to complete
+B/op - how many bytes were allocated per op
+allocs/op - how many distinct memory allocations occurred per op (single iteration)
+
+goos: darwin
+goarch: amd64
+pkg: github.com/timkippdev/ball-clock/internal
+cpu: Intel(R) Core(TM) i7-8850H CPU @ 2.60GHz
+
+-- simulation_test.go --
+BenchmarkSimulationModeOne30Balls
+BenchmarkSimulationModeOne30Balls-12              	    1561	    735111 ns/op	  681742 B/op	   16389 allocs/op
+BenchmarkSimulationModeOne45Balls
+BenchmarkSimulationModeOne45Balls-12              	      68	  17018760 ns/op	17038522 B/op	  392752 allocs/op
+BenchmarkSimulationModeOne123Balls
+BenchmarkSimulationModeOne123Balls-12             	       1	4695172879 ns/op	4798353000 B/op	109508222 allocs/op
+BenchmarkSimulationModeTwo30Balls325Minutes
+BenchmarkSimulationModeTwo30Balls325Minutes-12    	  112281	     10588 ns/op	   11064 B/op	     253 allocs/op
+
+-- clock_test.go --
+BenchmarkFlushTrack100
+BenchmarkFlushTrack100-12                    	233814310	         5.343 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFlushTrack1000
+BenchmarkFlushTrack1000-12                   	232841942	         5.376 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFlushTrack10000
+BenchmarkFlushTrack10000-12                  	232009951	         5.232 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFlushTrack100000
+BenchmarkFlushTrack100000-12                 	222575571	         5.129 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFlushTrack1000000
+BenchmarkFlushTrack1000000-12                	226041652	         5.170 ns/op	       0 B/op	       0 allocs/op
+BenchmarkTick100
+BenchmarkTick100-12                          	754719382	         1.552 ns/op	       0 B/op	       0 allocs/op
+BenchmarkTick1000
+BenchmarkTick1000-12                         	763492923	         1.554 ns/op	       0 B/op	       0 allocs/op
+BenchmarkTick10000
+BenchmarkTick10000-12                        	766273786	         1.559 ns/op	       0 B/op	       0 allocs/op
+BenchmarkTick100000
+BenchmarkTick100000-12                       	763480770	         1.558 ns/op	       0 B/op	       0 allocs/op
+BenchmarkTick1000000
+BenchmarkTick1000000-12                      	759308130	         1.570 ns/op	       0 B/op	       0 allocs/op
+BenchmarkMoveBallToTrack1TrackMax1
+BenchmarkMoveBallToTrack1TrackMax1-12        	76840586	        33.94 ns/op	      47 B/op	       0 allocs/op
+BenchmarkMoveBallToTrack2TracksMax1
+BenchmarkMoveBallToTrack2TracksMax1-12       	58900941	        21.36 ns/op	      49 B/op	       0 allocs/op
+BenchmarkMoveBallToTrack3TracksMax1
+BenchmarkMoveBallToTrack3TracksMax1-12       	40827404	        26.51 ns/op	      46 B/op	       0 allocs/op
+BenchmarkMoveBallToTrack100TracksMax1
+BenchmarkMoveBallToTrack100TracksMax1-12     	 1647292	       724.4 ns/op	      39 B/op	       0 allocs/op
+BenchmarkMoveBallToTrack1TrackMax5
+BenchmarkMoveBallToTrack1TrackMax5-12        	44022124	        24.93 ns/op	      53 B/op	       0 allocs/op
+BenchmarkMoveBallToTrack2TracksMax5
+BenchmarkMoveBallToTrack2TracksMax5-12       	38846122	        27.44 ns/op	      61 B/op	       0 allocs/op
+BenchmarkMoveBallToTrack3TracksMax5
+BenchmarkMoveBallToTrack3TracksMax5-12       	36717726	        28.20 ns/op	      54 B/op	       0 allocs/op
+BenchmarkMoveBallToTrack100TracksMax5
+BenchmarkMoveBallToTrack100TracksMax5-12     	35173676	        29.84 ns/op	      56 B/op	       0 allocs/op
+BenchmarkMoveBallToTrack1TrackMax10
+BenchmarkMoveBallToTrack1TrackMax10-12       	45933615	        22.40 ns/op	      65 B/op	       0 allocs/op
+BenchmarkMoveBallToTrack2TracksMax10
+BenchmarkMoveBallToTrack2TracksMax10-12      	43073244	        24.81 ns/op	      70 B/op	       0 allocs/op
+BenchmarkMoveBallToTrack3TracksMax10
+BenchmarkMoveBallToTrack3TracksMax10-12      	39985384	        26.03 ns/op	      74 B/op	       0 allocs/op
+BenchmarkMoveBallToTrack100TracksMax10
+BenchmarkMoveBallToTrack100TracksMax10-12    	42608050	        24.99 ns/op	      71 B/op	       0 allocs/op
+
+-- track_test.go --
+BenchmarkAdd0ExistingBalls
+BenchmarkAdd0ExistingBalls-12          	96821541	        13.95 ns/op	      47 B/op	       0 allocs/op
+BenchmarkAdd100ExistingBalls
+BenchmarkAdd100ExistingBalls-12        	100000000	        10.06 ns/op	      45 B/op	       0 allocs/op
+BenchmarkAdd10000ExistingBalls
+BenchmarkAdd10000ExistingBalls-12      	207809884	        17.32 ns/op	      45 B/op	       0 allocs/op
+BenchmarkAdd1000000ExistingBalls
+BenchmarkAdd1000000ExistingBalls-12    	124419378	         8.318 ns/op	      43 B/op	       0 allocs/op
+BenchmarkCanAdd100BallsNoMax
+BenchmarkCanAdd100BallsNoMax-12        	1000000000	         0.2459 ns/op	       0 B/op	       0 allocs/op
+BenchmarkCanAdd1000Balls100Max
+BenchmarkCanAdd1000Balls100Max-12      	1000000000	         0.4987 ns/op	       0 B/op	       0 allocs/op
+BenchmarkFlush
+BenchmarkFlush-12                      	334366598	         3.622 ns/op	       0 B/op	       0 allocs/op
+BenchmarkGetNext0Balls
+BenchmarkGetNext0Balls-12              	1000000000	         0.5007 ns/op	       0 B/op	       0 allocs/op
+BenchmarkGetNext100Balls
+BenchmarkGetNext100Balls-12            	1000000000	         0.4964 ns/op	       0 B/op	       0 allocs/op
+BenchmarkGetNext10000Balls
+BenchmarkGetNext10000Balls-12          	1000000000	         0.4996 ns/op	       0 B/op	       0 allocs/op
+BenchmarkGetNext1000000Balls
+BenchmarkGetNext1000000Balls-12        	1000000000	         0.5045 ns/op	       0 B/op	       0 allocs/op

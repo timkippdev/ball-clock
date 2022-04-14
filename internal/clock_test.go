@@ -25,12 +25,12 @@ func BenchmarkFlushTrack1000000(b *testing.B) {
 }
 
 func benchmarkFlushTrack(b *testing.B, ballCount uint) {
-	t := &track{balls: &ballQueue{elements: make([]*ball, ballCount)}}
+	t := &track{balls: make([]uint, ballCount)}
 	c := &clock{
-		reservoir: &track{balls: &ballQueue{}, nextTrack: t},
+		reservoir: &track{balls: make([]uint, 0), nextTrack: t},
 	}
 	for i := uint(0); i < ballCount; i++ {
-		t.balls.elements[i] = &ball{id: i}
+		t.balls[i] = i
 	}
 
 	for n := 0; n < b.N; n++ {
@@ -59,12 +59,12 @@ func BenchmarkTick1000000(b *testing.B) {
 }
 
 func benchmarkTick(b *testing.B, ballCount uint) {
-	t := &track{balls: &ballQueue{elements: make([]*ball, ballCount)}}
+	t := &track{balls: make([]uint, ballCount)}
 	c := &clock{
-		reservoir: &track{balls: &ballQueue{}, nextTrack: t},
+		reservoir: &track{balls: make([]uint, 0), nextTrack: t},
 	}
 	for i := uint(0); i < ballCount; i++ {
-		t.balls.elements[i] = &ball{id: i}
+		t.balls[i] = i
 	}
 
 	for n := 0; n < b.N; n++ {
@@ -123,16 +123,16 @@ func BenchmarkMoveBallToTrack100TracksMax10(b *testing.B) {
 func benchmarkMoveBallToTrack(b *testing.B, trackCount int, max uint8) {
 	tracks := make([]*track, trackCount)
 	for i := trackCount - 1; i >= 0; i-- {
-		tracks[i] = &track{balls: &ballQueue{max: max}}
+		tracks[i] = &track{balls: make([]uint, 0), maxBalls: max}
 		if i < trackCount-1 {
 			tracks[i].nextTrack = tracks[i+1]
 		}
 	}
 
 	c := &clock{
-		reservoir: &track{balls: &ballQueue{}, nextTrack: tracks[0]},
+		reservoir: &track{balls: make([]uint, 0), nextTrack: tracks[0]},
 	}
 	for n := 0; n < b.N; n++ {
-		c.moveBallToTrack(&ball{id: uint(n)}, tracks[0])
+		c.moveBallToTrack(uint(n), tracks[0])
 	}
 }
