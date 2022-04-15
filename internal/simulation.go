@@ -27,7 +27,7 @@ type simulation struct {
 func NewSimulation(params SimulationParams) *simulation {
 	// setup tracks (defined in reverse order for linking)
 	// hour - holds balls indicating how many hours have passed (max 12)
-	hourTrack := &track{maxBalls: 12, name: "Hour", flushToDayRatio: 0.5} // flushToDayRatio 0.5 because each flush is 1/2 day (12 hours)
+	hourTrack := &track{maxBalls: 12, name: "Hour"}
 
 	// five minute - holds balls indicating how many minutes have passed in increments of five (max 12)
 	minFiveTrack := &track{maxBalls: 12, name: "FiveMin", nextTrack: hourTrack}

@@ -1,13 +1,12 @@
 package internal
 
 type track struct {
-	balls           []uint8
-	currentLength   int
-	flushCount      uint64
-	flushToDayRatio float64
-	maxBalls        uint8
-	name            string
-	nextTrack       *track
+	balls         []uint8
+	currentLength int
+	flushCount    uint64
+	maxBalls      uint8
+	name          string
+	nextTrack     *track
 }
 
 func (t *track) add(id uint8) {

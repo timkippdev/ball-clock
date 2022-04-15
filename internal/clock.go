@@ -6,6 +6,7 @@ import (
 )
 
 type clock struct {
+	tickCount uint
 	reservoir *track
 }
 
@@ -31,19 +32,13 @@ func (c *clock) getCurrentTrackStates() map[string]string {
 	return state
 }
 
-func (c *clock) getElapsedDays() float64 {
-	elapsedDays := float64(0)
-	track := c.reservoir
-	for track != nil {
-		if track.flushToDayRatio != 0 {
-			elapsedDays += (float64(track.flushCount) * track.flushToDayRatio)
-		}
-		track = track.nextTrack
-	}
-	return elapsedDays
+func (c *clock) getElapsedDays() uint {
+	return c.tickCount / 60 / 24
 }
 
 func (c *clock) tick() {
+	c.tickCount++
+
 	// pull next ball from reservoir
 	nextBallFromMainTrack := c.reservoir.getNext()
 	if nextBallFromMainTrack == 0 {
