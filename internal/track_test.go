@@ -10,22 +10,14 @@ func BenchmarkAdd100ExistingBalls(b *testing.B) {
 	benchmarkAdd(b, 100)
 }
 
-func BenchmarkAdd10000ExistingBalls(b *testing.B) {
-	benchmarkAdd(b, 10000)
-}
-
-func BenchmarkAdd1000000ExistingBalls(b *testing.B) {
-	benchmarkAdd(b, 1000000)
-}
-
-func benchmarkAdd(b *testing.B, ballCount int) {
-	t := &track{balls: make([]uint, ballCount)}
-	for i := 0; i < ballCount; i++ {
-		t.balls[i] = uint(i)
+func benchmarkAdd(b *testing.B, ballCount uint8) {
+	t := &track{balls: make([]uint8, ballCount)}
+	for i := uint8(0); i < ballCount; i++ {
+		t.balls[i] = i
 	}
 
 	for n := 0; n < b.N; n++ {
-		t.add(uint(n))
+		t.add(0)
 	}
 }
 
@@ -33,14 +25,10 @@ func BenchmarkCanAdd100BallsNoMax(b *testing.B) {
 	benchmarkCanAdd(b, 100, 0)
 }
 
-func BenchmarkCanAdd1000Balls100Max(b *testing.B) {
-	benchmarkCanAdd(b, 1000, 100)
-}
-
-func benchmarkCanAdd(b *testing.B, ballCount int, max uint8) {
-	t := &track{balls: make([]uint, ballCount), maxBalls: max}
-	for i := 0; i < ballCount; i++ {
-		t.balls[i] = uint(i)
+func benchmarkCanAdd(b *testing.B, ballCount uint8, max uint8) {
+	t := &track{balls: make([]uint8, ballCount), maxBalls: max}
+	for i := uint8(0); i < ballCount; i++ {
+		t.balls[i] = i
 	}
 
 	for n := 0; n < b.N; n++ {
@@ -64,18 +52,10 @@ func BenchmarkGetNext100Balls(b *testing.B) {
 	benchmarkGetNext(b, 100)
 }
 
-func BenchmarkGetNext10000Balls(b *testing.B) {
-	benchmarkGetNext(b, 10000)
-}
-
-func BenchmarkGetNext1000000Balls(b *testing.B) {
-	benchmarkGetNext(b, 1000000)
-}
-
-func benchmarkGetNext(b *testing.B, ballCount int) {
-	t := &track{balls: make([]uint, ballCount)}
-	for i := 0; i < ballCount; i++ {
-		t.balls[i] = uint(i)
+func benchmarkGetNext(b *testing.B, ballCount uint8) {
+	t := &track{balls: make([]uint8, ballCount)}
+	for i := uint8(0); i < ballCount; i++ {
+		t.balls[i] = i
 	}
 
 	for n := 0; n < b.N; n++ {

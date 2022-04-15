@@ -1,5 +1,10 @@
 package internal
 
+import (
+	"fmt"
+	"strings"
+)
+
 type clock struct {
 	reservoir *track
 }
@@ -16,11 +21,11 @@ func (c *clock) flushTrack(t *track) {
 	t.flush()
 }
 
-func (c *clock) getCurrentTrackStates() map[string][]uint {
-	state := map[string][]uint{}
+func (c *clock) getCurrentTrackStates() map[string]string {
+	state := map[string]string{}
 	track := c.reservoir
 	for track != nil {
-		state[track.name] = track.balls
+		state[track.name] = strings.Join(strings.Fields(fmt.Sprintf("%d", track.balls)), ",")
 		track = track.nextTrack
 	}
 	return state
@@ -49,7 +54,7 @@ func (c *clock) tick() {
 	c.moveBallToTrack(nextBallFromMainTrack, c.reservoir.nextTrack)
 }
 
-func (c *clock) moveBallToTrack(id uint, t *track) {
+func (c *clock) moveBallToTrack(id uint8, t *track) {
 	// check if ball can be added to track
 	if t.canAdd() {
 		t.add(id)

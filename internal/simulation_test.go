@@ -18,7 +18,7 @@ func BenchmarkSimulationModeTwo30Balls325Minutes(b *testing.B) {
 	fireSimulation(b, ModeTwo, 30, 325)
 }
 
-func fireSimulation(b *testing.B, mode Mode, balls uint, minutes uint) {
+func fireSimulation(b *testing.B, mode Mode, balls uint8, minutes uint) {
 	for n := 0; n < b.N; n++ {
 		NewSimulation(SimulationParams{
 			Mode:                 mode,

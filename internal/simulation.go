@@ -15,7 +15,7 @@ type Mode uint8
 
 type SimulationParams struct {
 	Mode                 Mode
-	NumberOfBalls        uint
+	NumberOfBalls        uint8
 	NumberOfMinutesToRun uint
 }
 
@@ -39,7 +39,7 @@ func NewSimulation(params SimulationParams) *simulation {
 	reservoir := &track{name: "Main", nextTrack: minTrack}
 
 	// load balls into reservoir
-	for i := uint(1); i <= params.NumberOfBalls; i++ {
+	for i := uint8(1); i <= params.NumberOfBalls; i++ {
 		reservoir.add(i)
 	}
 
@@ -55,37 +55,35 @@ func NewSimulation(params SimulationParams) *simulation {
 func (s *simulation) Run() {
 	fmt.Printf("simulation started: %+v\n", s.params)
 
-	start := time.Now()
-	defer func() {
-		fmt.Printf("simulation took: %s\n", time.Since(start))
-	}()
-
 	switch s.params.Mode {
 	case ModeOne:
+		start := time.Now()
 		for {
 			s.clock.tick()
 
 			// check if reservoir is full
-			elements := s.clock.reservoir.balls
-			if len(elements) == int(s.params.NumberOfBalls) {
+			if s.clock.reservoir.currentLength == int(s.params.NumberOfBalls) {
 				// check if reservoir is in initial order
 				isInOrder := true
-				for i, v := range elements {
-					if v != uint(i+1) {
+				for i, v := range s.clock.reservoir.balls {
+					if v != uint8(i+1) {
 						isInOrder = false
 						break
 					}
 				}
 				if isInOrder {
+					fmt.Printf("simulation took: %s\n", time.Since(start))
 					fmt.Printf("simulation output: %d balls cycle after %d days\n", s.params.NumberOfBalls, int(s.clock.getElapsedDays()))
 					break
 				}
 			}
 		}
 	case ModeTwo:
+		start := time.Now()
 		for i := uint(0); i < s.params.NumberOfMinutesToRun; i++ {
 			s.clock.tick()
 		}
+		fmt.Printf("simulation took: %s\n", time.Since(start))
 		stateJSON, _ := json.Marshal(s.clock.getCurrentTrackStates())
 		fmt.Printf("simulation output: %s\n", string(stateJSON))
 	default:

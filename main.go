@@ -41,7 +41,7 @@ func main() {
 	// run simulation
 	internal.NewSimulation(internal.SimulationParams{
 		Mode:                 mode,
-		NumberOfBalls:        numberOfBalls,
+		NumberOfBalls:        uint8(numberOfBalls),
 		NumberOfMinutesToRun: numberOfMinutesToRun,
 	}).Run()
 }

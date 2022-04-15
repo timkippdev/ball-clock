@@ -8,28 +8,12 @@ func BenchmarkFlushTrack100(b *testing.B) {
 	benchmarkFlushTrack(b, 100)
 }
 
-func BenchmarkFlushTrack1000(b *testing.B) {
-	benchmarkFlushTrack(b, 1000)
-}
-
-func BenchmarkFlushTrack10000(b *testing.B) {
-	benchmarkFlushTrack(b, 10000)
-}
-
-func BenchmarkFlushTrack100000(b *testing.B) {
-	benchmarkFlushTrack(b, 100000)
-}
-
-func BenchmarkFlushTrack1000000(b *testing.B) {
-	benchmarkFlushTrack(b, 1000000)
-}
-
-func benchmarkFlushTrack(b *testing.B, ballCount uint) {
-	t := &track{balls: make([]uint, ballCount)}
+func benchmarkFlushTrack(b *testing.B, ballCount uint8) {
+	t := &track{balls: make([]uint8, ballCount)}
 	c := &clock{
-		reservoir: &track{balls: make([]uint, 0), nextTrack: t},
+		reservoir: &track{balls: make([]uint8, 0), nextTrack: t},
 	}
-	for i := uint(0); i < ballCount; i++ {
+	for i := uint8(0); i < ballCount; i++ {
 		t.balls[i] = i
 	}
 
@@ -42,28 +26,12 @@ func BenchmarkTick100(b *testing.B) {
 	benchmarkTick(b, 100)
 }
 
-func BenchmarkTick1000(b *testing.B) {
-	benchmarkTick(b, 1000)
-}
-
-func BenchmarkTick10000(b *testing.B) {
-	benchmarkTick(b, 10000)
-}
-
-func BenchmarkTick100000(b *testing.B) {
-	benchmarkTick(b, 100000)
-}
-
-func BenchmarkTick1000000(b *testing.B) {
-	benchmarkTick(b, 1000000)
-}
-
-func benchmarkTick(b *testing.B, ballCount uint) {
-	t := &track{balls: make([]uint, ballCount)}
+func benchmarkTick(b *testing.B, ballCount uint8) {
+	t := &track{balls: make([]uint8, ballCount)}
 	c := &clock{
-		reservoir: &track{balls: make([]uint, 0), nextTrack: t},
+		reservoir: &track{balls: make([]uint8, 0), nextTrack: t},
 	}
-	for i := uint(0); i < ballCount; i++ {
+	for i := uint8(0); i < ballCount; i++ {
 		t.balls[i] = i
 	}
 
@@ -123,16 +91,16 @@ func BenchmarkMoveBallToTrack100TracksMax10(b *testing.B) {
 func benchmarkMoveBallToTrack(b *testing.B, trackCount int, max uint8) {
 	tracks := make([]*track, trackCount)
 	for i := trackCount - 1; i >= 0; i-- {
-		tracks[i] = &track{balls: make([]uint, 0), maxBalls: max}
+		tracks[i] = &track{balls: make([]uint8, 0), maxBalls: max}
 		if i < trackCount-1 {
 			tracks[i].nextTrack = tracks[i+1]
 		}
 	}
 
 	c := &clock{
-		reservoir: &track{balls: make([]uint, 0), nextTrack: tracks[0]},
+		reservoir: &track{balls: make([]uint8, 0), nextTrack: tracks[0]},
 	}
 	for n := 0; n < b.N; n++ {
-		c.moveBallToTrack(uint(n), tracks[0])
+		c.moveBallToTrack(uint8(n), tracks[0])
 	}
 }
