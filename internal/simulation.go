@@ -58,11 +58,12 @@ func (s *simulation) Run() {
 	switch s.params.Mode {
 	case ModeOne:
 		start := time.Now()
+		nb := int(s.params.NumberOfBalls)
 		for {
 			s.clock.tick()
 
 			// check if reservoir is full
-			if s.clock.reservoir.currentLength == int(s.params.NumberOfBalls) {
+			if s.clock.reservoir.currentLength == nb {
 				// check if reservoir is in initial order
 				isInOrder := true
 				for i, v := range s.clock.reservoir.balls {

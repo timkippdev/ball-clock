@@ -1,9 +1,18 @@
 package internal
 
+type trackSlots byte
+
+const (
+	slot1 = 1 << iota
+	slot2
+	slot3
+	slot4
+)
+
 type track struct {
 	balls         []uint8
+	trackSlots    trackSlots
 	currentLength int
-	flushCount    uint64
 	maxBalls      uint8
 	name          string
 	nextTrack     *track
@@ -23,7 +32,6 @@ func (t *track) canAdd() bool {
 }
 
 func (t *track) flush() {
-	t.flushCount++
 	t.balls = make([]uint8, 0)
 	t.currentLength = 0
 }
