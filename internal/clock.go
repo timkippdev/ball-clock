@@ -1,6 +1,12 @@
 package internal
 
+import (
+	"fmt"
+	"strings"
+)
+
 type clock struct {
+	tickCount uint
 	reservoir *track
 }
 
@@ -8,30 +14,34 @@ func (c *clock) flushTrack(t *track) {
 	balls := t.balls
 
 	// move existing balls back to reservoir in reverse order
-	for i := len(balls.elements) - 1; i >= 0; i-- {
-		c.moveBallToTrack(balls.elements[i], c.reservoir)
+	for i := len(balls) - 1; i >= 0; i-- {
+		c.moveBallToTrack(balls[i], c.reservoir)
 	}
 
 	// clear the existing balls from the track
-	balls.flush()
+	t.flush()
 }
 
-func (c *clock) getCurrentTrackStates() map[string][]uint {
-	state := map[string][]uint{}
-	addTrackToOutputMap(state, c.reservoir)
+func (c *clock) getCurrentTrackStates() map[string]string {
+	state := map[string]string{}
+	track := c.reservoir
+	for track != nil {
+		state[track.name] = strings.Join(strings.Fields(fmt.Sprintf("%d", track.balls)), ",")
+		track = track.nextTrack
+	}
 	return state
 }
 
-func (c *clock) getElapsedDays() float64 {
-	elapsedDays := float64(0)
-	addTrackToElapsedDays(&elapsedDays, c.reservoir)
-	return elapsedDays
+func (c *clock) getElapsedDays() uint {
+	return c.tickCount / 60 / 24
 }
 
 func (c *clock) tick() {
+	c.tickCount++
+
 	// pull next ball from reservoir
-	nextBallFromMainTrack := c.reservoir.balls.getNext()
-	if nextBallFromMainTrack == nil {
+	nextBallFromMainTrack := c.reservoir.getNext()
+	if nextBallFromMainTrack == 0 {
 		return
 	}
 
@@ -39,10 +49,10 @@ func (c *clock) tick() {
 	c.moveBallToTrack(nextBallFromMainTrack, c.reservoir.nextTrack)
 }
 
-func (c *clock) moveBallToTrack(b *ball, t *track) {
-	balls := t.balls
-	if balls.canAdd() {
-		balls.add(b)
+func (c *clock) moveBallToTrack(id uint8, t *track) {
+	// check if ball can be added to track
+	if t.canAdd() {
+		t.add(id)
 		return
 	}
 
@@ -51,30 +61,8 @@ func (c *clock) moveBallToTrack(b *ball, t *track) {
 
 	// move active ball to next track or back to reservoir
 	if t.nextTrack != nil {
-		c.moveBallToTrack(b, t.nextTrack)
+		c.moveBallToTrack(id, t.nextTrack)
 		return
 	}
-	c.moveBallToTrack(b, c.reservoir)
-}
-
-func addTrackToElapsedDays(elapsedDays *float64, t *track) {
-	if t.flushDayRatio != 0 {
-		*elapsedDays += (float64(t.balls.flushCount) * t.flushDayRatio)
-	}
-
-	if t.nextTrack != nil {
-		addTrackToElapsedDays(elapsedDays, t.nextTrack)
-	}
-}
-
-func addTrackToOutputMap(outputMap map[string][]uint, t *track) {
-	ballIds := make([]uint, 0)
-	for _, v := range t.balls.elements {
-		ballIds = append(ballIds, v.id)
-	}
-	outputMap[t.name] = ballIds
-
-	if t.nextTrack != nil {
-		addTrackToOutputMap(outputMap, t.nextTrack)
-	}
+	c.moveBallToTrack(id, c.reservoir)
 }

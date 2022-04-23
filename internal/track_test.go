@@ -2,83 +2,63 @@ package internal
 
 import "testing"
 
-func BenchmarkBallQueueAdd0ExistingElements(b *testing.B) {
-	benchmarkBallQueueAdd(b, 0)
+func BenchmarkAdd0ExistingBalls(b *testing.B) {
+	benchmarkAdd(b, 0)
 }
 
-func BenchmarkBallQueueAdd100ExistingElements(b *testing.B) {
-	benchmarkBallQueueAdd(b, 100)
+func BenchmarkAdd100ExistingBalls(b *testing.B) {
+	benchmarkAdd(b, 100)
 }
 
-func BenchmarkBallQueueAdd10000ExistingElements(b *testing.B) {
-	benchmarkBallQueueAdd(b, 10000)
-}
-
-func BenchmarkBallQueueAdd1000000ExistingElements(b *testing.B) {
-	benchmarkBallQueueAdd(b, 1000000)
-}
-
-func benchmarkBallQueueAdd(b *testing.B, elements int) {
-	bq := &ballQueue{elements: make([]*ball, elements)}
-	for i := 0; i < elements; i++ {
-		bq.elements[i] = &ball{id: uint(i)}
+func benchmarkAdd(b *testing.B, ballCount uint8) {
+	t := &track{balls: make([]uint8, ballCount)}
+	for i := uint8(0); i < ballCount; i++ {
+		t.balls[i] = i
 	}
 
 	for n := 0; n < b.N; n++ {
-		bq.add(&ball{id: uint(n)})
+		t.add(0)
 	}
 }
 
-func BenchmarkBallQueueCanAdd100ElementsNoMax(b *testing.B) {
-	benchmarkBallQueueCanAdd(b, 100, 0)
+func BenchmarkCanAdd100BallsNoMax(b *testing.B) {
+	benchmarkCanAdd(b, 100, 0)
 }
 
-func BenchmarkBallQueueCanAdd1000Elements100Max(b *testing.B) {
-	benchmarkBallQueueCanAdd(b, 1000, 100)
-}
-
-func benchmarkBallQueueCanAdd(b *testing.B, elements int, max uint8) {
-	bq := &ballQueue{elements: make([]*ball, elements)}
-	for i := 0; i < elements; i++ {
-		bq.elements[i] = &ball{id: uint(i)}
+func benchmarkCanAdd(b *testing.B, ballCount uint8, max uint8) {
+	t := &track{balls: make([]uint8, ballCount), maxBalls: max}
+	for i := uint8(0); i < ballCount; i++ {
+		t.balls[i] = i
 	}
 
 	for n := 0; n < b.N; n++ {
-		bq.canAdd()
+		t.canAdd()
 	}
 }
 
-func BenchmarkBallQueueFlush(b *testing.B) {
-	bq := &ballQueue{}
+func BenchmarkFlush(b *testing.B) {
+	t := &track{}
 
 	for n := 0; n < b.N; n++ {
-		bq.flush()
+		t.flush()
 	}
 }
 
-func BenchmarkBallQueueGetNext0Elements(b *testing.B) {
-	benchmarkBallQueueGetNext(b, 0)
+func BenchmarkGetNext0Balls(b *testing.B) {
+	benchmarkGetNext(b, 0)
 }
 
-func BenchmarkBallQueueGetNext100Elements(b *testing.B) {
-	benchmarkBallQueueGetNext(b, 100)
+func BenchmarkGetNext100Balls(b *testing.B) {
+	benchmarkGetNext(b, 100)
 }
 
-func BenchmarkBallQueueGetNext10000Elements(b *testing.B) {
-	benchmarkBallQueueGetNext(b, 10000)
-}
-
-func BenchmarkBallQueueGetNext1000000Elements(b *testing.B) {
-	benchmarkBallQueueGetNext(b, 1000000)
-}
-
-func benchmarkBallQueueGetNext(b *testing.B, elements int) {
-	bq := &ballQueue{elements: make([]*ball, elements)}
-	for i := 0; i < elements; i++ {
-		bq.elements[i] = &ball{id: uint(i)}
+func benchmarkGetNext(b *testing.B, ballCount uint8) {
+	t := &track{balls: make([]uint8, ballCount)}
+	for i := uint8(0); i < ballCount; i++ {
+		t.balls[i] = i
 	}
 
 	for n := 0; n < b.N; n++ {
-		bq.getNext()
+		t.getNext()
 	}
 }
